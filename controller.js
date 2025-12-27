@@ -15,6 +15,8 @@ exports.uploadIdProof = async (req, res) => {
     );
     console.log(result.secure_url);
 
+    
+
     const model1 = new model({
         url: result.secure_url,
         public_id: result.public_id,
