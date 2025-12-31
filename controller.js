@@ -11,13 +11,16 @@ exports.uploadIdProof = async (req, res) => {
       `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
       {
         folder: "vendor-idproofs",
+        // resource_type: "raw", // 🔥 required for PDF
+        // allowed_formats: ["pdf"],
       }
     );
     console.log(result.secure_url);
 
-    
+    const name=req.body.name;
 
     const model1 = new model({
+        name:name,
         url: result.secure_url,
         public_id: result.public_id,
         });
@@ -25,6 +28,7 @@ exports.uploadIdProof = async (req, res) => {
     await model1.save();
     
     res.status(201).json({
+      name:name,
       success: true,
       url: result.secure_url,
       public_id: result.public_id,
